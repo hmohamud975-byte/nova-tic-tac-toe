@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NOVA | Tic Tac Toe</title>
+
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" type="image/png" href="tic tac toe/ttt.png">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <span>◆</span> NOVA
+        </div>
+
+        <button id="themeBtn">◐</button>
+    </header>
+
+
+    <main>
+
+        <section class="hero">
+
+            <p class="status">
+                <span></span> SYSTEM ONLINE
+            </p>
+
+            <h1>
+                TIC TAC TOE
+            </h1>
+
+            <p>
+                Enter the 3×3 arena. Make your move.
+            </p>
+
+        </section>
+
+
+        <!-- GAME MODE -->
+
+        <section class="mode-container">
+
+            <p class="label">CHOOSE YOUR MATCH</p>
+
+            <div class="modes">
+
+                <button class="mode active" data-mode="ai">
+
+                    <div class="mode-icon">🤖</div>
+
+                    <div>
+                        <strong>PLAYER VS AI</strong>
+                        <small>Challenge the machine</small>
+                    </div>
+
+                    <span>SEAT 02</span>
+
+                </button>
+
+
+                <button class="mode" data-mode="friend">
+
+                    <div class="mode-icon">👥</div>
+
+                    <div>
+                        <strong>PLAYER VS FRIEND</strong>
+                        <small>Two players • same device</small>
+                    </div>
+
+                    <span>SEAT 02</span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- GAME -->
+
+        <section class="game-area">
+
+
+            <!-- PLAYER X -->
+
+            <div class="player-card">
+
+                <small>PLAYER 01</small>
+
+                <div class="symbol x">X</div>
+
+                <h3 id="playerOne">YOU</h3>
+
+                <div class="score">
+                    WINS
+                    <strong id="xScore">0</strong>
+                </div>
+
+            </div>
+
+
+            <!-- BOARD -->
+
+            <div class="game">
+
+                <div class="round">
+
+                    <span id="round">
+                        ROUND 01
+                    </span>
+
+                    <span id="turn">
+                        YOUR TURN
+                    </span>
+
+                </div>
+
+
+                <div id="board">
+
+                    <button class="cell"></button>
+                    <button class="cell"></button>
+                    <button class="cell"></button>
+
+                    <button class="cell"></button>
+                    <button class="cell"></button>
+                    <button class="cell"></button>
+
+                    <button class="cell"></button>
+                    <button class="cell"></button>
+                    <button class="cell"></button>
+
+                </div>
+
+
+                <div id="message">
+                    MAKE YOUR MOVE
+                </div>
+
+
+                <div class="buttons">
+
+                    <button id="newGame">
+                        NEW MATCH ↻
+                    </button>
+
+                    <button id="resetScore">
+                        RESET SCORE
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PLAYER O -->
+
+            <div class="player-card">
+
+                <small>PLAYER 02</small>
+
+                <div class="symbol o">O</div>
+
+                <h3 id="playerTwo">NOVA AI</h3>
+
+                <div class="score">
+                    WINS
+                    <strong id="oScore">0</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="console">
+
+            <strong>● MATCH LOG</strong>
+
+            <p id="log">
+                Waiting for first move...
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        NOVA ARCADE // 3×3 PROTOCOL
+    </footer>
+
+
+    <script src="index.js"></script>
+
+</body>
+</html>
