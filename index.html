@@ -12,12 +12,122 @@
 
 <body>
 
+    <section id="authScreen">
+
+    <div class="auth-box">
+
+        <div class="auth-logo">
+            ◆ NOVA
+        </div>
+
+        <!-- REGISTER -->
+        <div id="registerPanel">
+
+            <p class="auth-status">CREATE YOUR ACCOUNT</p>
+
+            <h1>REGISTER</h1>
+
+            <p class="auth-subtitle">
+                Enter the NOVA arena.
+            </p>
+
+            <form id="registerForm">
+
+                <input
+                    type="text"
+                    id="registerUsername"
+                    placeholder="Username"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Password"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="registerConfirmPassword"
+                    placeholder="Confirm password"
+                    required
+                >
+
+                <button type="submit">
+                    CREATE ACCOUNT
+                </button>
+
+            </form>
+
+            <p id="registerMessage"></p>
+
+            <p class="auth-switch">
+                Already have an account?
+                <button type="button" id="showLogin">
+                    LOGIN
+                </button>
+            </p>
+
+        </div>
+
+
+        <!-- LOGIN -->
+        <div id="loginPanel" style="display: none;">
+
+            <p class="auth-status">WELCOME BACK</p>
+
+            <h1>LOGIN</h1>
+
+            <p class="auth-subtitle">
+                Access your NOVA profile.
+            </p>
+
+            <form id="loginForm">
+
+                <input
+                    type="text"
+                    id="loginUsername"
+                    placeholder="Username"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Password"
+                    required
+                >
+
+                <button type="submit">
+                    ENTER ARENA
+                </button>
+
+            </form>
+
+            <p id="loginMessage"></p>
+
+            <p class="auth-switch">
+                Don't have an account?
+                <button type="button" id="showRegister">
+                    REGISTER
+                </button>
+            </p>
+
+        </div>
+
+    </div>
+
+</section> 
+
     <header>
         <div class="logo">
             <span>◆</span> NOVA
         </div>
 
         <button id="themeBtn">◐</button>
+        <button id="historyBtn">HISTORY</button>
+         <button id="logoutBtn">LOGOUT</button>
     </header>
 
 
@@ -188,6 +298,27 @@
         </section>
 
     </main>
+
+    <section id="historyScreen">
+
+    <div class="history-box">
+
+        <div class="history-header">
+            <div>
+                <p class="auth-status">NOVA DATABASE</p>
+                <h2>MATCH HISTORY</h2>
+            </div>
+
+            <button id="closeHistory">✕</button>
+        </div>
+
+        <div id="historyList">
+            <p>Loading match history...</p>
+        </div>
+
+    </div>
+
+</section>
 
 
     <footer>

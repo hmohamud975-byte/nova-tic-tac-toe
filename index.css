@@ -859,3 +859,262 @@ footer {
         padding: 4px;
     }
 }
+
+/* =========================
+   NOVA AUTH SCREEN
+   ========================= */
+
+#authScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        radial-gradient(circle at 50% 30%, rgba(0, 234, 255, 0.12), transparent 35%),
+        radial-gradient(circle at 80% 80%, rgba(157, 78, 221, 0.12), transparent 35%),
+        #050611;
+}
+
+.auth-box {
+    width: min(420px, 90%);
+    padding: 40px;
+
+    border: 1px solid var(--cyan);
+    background: rgba(5, 6, 17, 0.92);
+
+    box-shadow:
+        0 0 25px rgba(0, 234, 255, 0.15),
+        inset 0 0 30px rgba(0, 234, 255, 0.03);
+
+    text-align: center;
+}
+
+.auth-logo {
+    color: var(--cyan);
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    margin-bottom: 30px;
+}
+
+.auth-status {
+    color: var(--cyan);
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.auth-box h1 {
+    margin: 0;
+    color: white;
+    letter-spacing: 5px;
+}
+
+.auth-subtitle {
+    color: #888;
+    margin-bottom: 25px;
+}
+
+.auth-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-box input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 14px;
+
+    background: #090b18;
+    border: 1px solid #252943;
+    color: white;
+
+    outline: none;
+}
+
+.auth-box input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px rgba(0, 234, 255, 0.15);
+}
+
+.auth-box form button {
+    padding: 14px;
+
+    border: 1px solid var(--cyan);
+    background: transparent;
+    color: var(--cyan);
+
+    font-weight: bold;
+    letter-spacing: 2px;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.auth-box form button:hover {
+    background: var(--cyan);
+    color: #050611;
+    box-shadow: 0 0 20px rgba(0, 234, 255, 0.4);
+}
+
+.auth-switch {
+    margin-top: 25px;
+    color: #888;
+    font-size: 14px;
+}
+
+.auth-switch button {
+    border: none;
+    background: none;
+    color: var(--cyan);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#registerMessage,
+#loginMessage {
+    min-height: 20px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+#logoutBtn {
+    padding: 8px 14px;
+    margin-left: 8px;
+
+    border: 1px solid var(--cyan);
+    background: transparent;
+    color: var(--cyan);
+
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#logoutBtn:hover {
+    background: var(--cyan);
+    color: #050611;
+    box-shadow: 0 0 15px rgba(0, 234, 255, 0.4);
+}
+
+/* =========================
+   MATCH HISTORY
+   ========================= */
+
+#historyScreen {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(5, 6, 17, 0.94);
+    backdrop-filter: blur(8px);
+}
+
+.history-box {
+    width: min(650px, 90%);
+    max-height: 80vh;
+    overflow-y: auto;
+
+    padding: 30px;
+
+    border: 1px solid var(--cyan);
+    background: #050611;
+
+    box-shadow:
+        0 0 30px rgba(0, 234, 255, 0.15),
+        inset 0 0 30px rgba(0, 234, 255, 0.03);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.history-header h2 {
+    margin: 0;
+    color: white;
+    letter-spacing: 4px;
+}
+
+#closeHistory {
+    border: 1px solid var(--cyan);
+    background: transparent;
+    color: var(--cyan);
+
+    width: 35px;
+    height: 35px;
+
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#closeHistory:hover {
+    background: var(--cyan);
+    color: #050611;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px;
+
+    margin-bottom: 10px;
+
+    border: 1px solid #252943;
+    background: #090b18;
+}
+
+.history-result {
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.history-opponent {
+    color: #aaa;
+}
+
+.history-date {
+    color: #666;
+    font-size: 12px;
+}
+
+#historyBtn {
+    padding: 8px 14px;
+    margin-left: 8px;
+
+    border: 1px solid var(--purple);
+    background: transparent;
+    color: var(--purple);
+
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#historyBtn:hover {
+    background: var(--purple);
+    color: #050611;
+    box-shadow: 0 0 15px rgba(157, 78, 221, 0.4);
+}

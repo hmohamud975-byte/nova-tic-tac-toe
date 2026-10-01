@@ -277,19 +277,23 @@ function endGame(result) {
 
     gameOver = true;
 
+        if (mode === "ai") {
+        if (result.winner === "X") {
+            saveMatchResult("Win");
+        } else if (result.winner === "O") {
+            saveMatchResult("Loss");
+        } else if (result.winner === "draw") {
+            saveMatchResult("Draw");
+        }
+    }
 
-    if (result.winner === "draw") {
-    message.textContent = "GRID CONQUERED — DRAW";
-    log.textContent = "New match starting in 10 seconds...";
 
-    setTimeout(() => {
-        startNewGame();
-    }, 10000);
+   if (result.winner === "draw") {
+    message.textContent = "IT'S A DRAW, STAND DOWN!";
+    log.textContent = "Draw! Start a new match when you're ready.";
 
     return;
-
-
-    }
+}
 
 
     scores[result.winner]++;
@@ -343,6 +347,7 @@ function endGame(result) {
 }
 
 newGameBtn.addEventListener("click", () => {
+    console.trace("NEW MATCH BUTTON FIRED");
 
     board = ["", "", "", "", "", "", "", "", ""];
 
@@ -565,4 +570,249 @@ function updateTurn() {
 
     }
 
+}
+
+async function saveMatchResult(result) {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        console.log("No login token. Match was not saved.");
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/matches", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                result: result
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            console.error("Could not save match:", data.message);
+            return;
+        }
+
+        console.log("Match saved:", data);
+    } catch (error) {
+        console.error("Error saving match:", error);
+    }
+}
+
+// =========================
+// AUTHENTICATION
+// =========================
+
+const registerForm = document.getElementById("registerForm");
+const loginForm = document.getElementById("loginForm");
+
+const registerPanel = document.getElementById("registerPanel");
+const loginPanel = document.getElementById("loginPanel");
+
+const showLogin = document.getElementById("showLogin");
+const showRegister = document.getElementById("showRegister");
+
+const registerMessage = document.getElementById("registerMessage");
+const loginMessage = document.getElementById("loginMessage");
+
+
+showLogin.addEventListener("click", () => {
+    registerPanel.style.display = "none";
+    loginPanel.style.display = "block";
+});
+
+
+showRegister.addEventListener("click", () => {
+    loginPanel.style.display = "none";
+    registerPanel.style.display = "block";
+});
+
+
+registerForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const username = document.getElementById("registerUsername").value;
+    const password = document.getElementById("registerPassword").value;
+    const confirmPassword = document.getElementById("registerConfirmPassword").value;
+
+    registerMessage.textContent = "Creating account...";
+
+    try {
+        const response = await fetch("/api/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+                confirmPassword: confirmPassword
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            registerMessage.textContent = data.message;
+            return;
+        }
+
+        registerMessage.textContent = "Account created! Logging you in...";
+
+        document.getElementById("registerForm").reset();
+
+        setTimeout(() => {
+            registerPanel.style.display = "none";
+            loginPanel.style.display = "block";
+        }, 1000);
+
+    } catch (error) {
+        console.error(error);
+        registerMessage.textContent = "Could not connect to the server.";
+    }
+});
+
+loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const username = document.getElementById("loginUsername").value;
+    const password = document.getElementById("loginPassword").value;
+
+    loginMessage.textContent = "Logging in...";
+
+    try {
+        const response = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            loginMessage.textContent = data.message;
+            return;
+        }
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.user.username);
+
+        loginMessage.textContent = "Login successful!";
+
+        setTimeout(() => {
+            document.getElementById("authScreen").style.display = "none";
+        }, 500);
+
+    } catch (error) {
+        console.error(error);
+        loginMessage.textContent = "Could not connect to the server.";
+    }
+});
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+
+    document.getElementById("authScreen").style.display = "flex";
+
+    loginPanel.style.display = "block";
+    registerPanel.style.display = "none";
+
+    loginForm.reset();
+
+    loginMessage.textContent = "";
+});
+
+// =========================
+// MATCH HISTORY
+// =========================
+
+const historyBtn = document.getElementById("historyBtn");
+const closeHistory = document.getElementById("closeHistory");
+const historyScreen = document.getElementById("historyScreen");
+const historyList = document.getElementById("historyList");
+
+historyBtn.addEventListener("click", async () => {
+    historyScreen.style.display = "flex";
+    historyList.innerHTML = "<p>Loading match history...</p>";
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        historyList.innerHTML = "<p>Please log in first.</p>";
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/matches", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            historyList.innerHTML = `<p>${data.message}</p>`;
+            return;
+        }
+
+        if (data.matches.length === 0) {
+            historyList.innerHTML = "<p>No matches played yet.</p>";
+            return;
+        }
+
+        historyList.innerHTML = "";
+
+        data.matches.forEach(match => {
+            const item = document.createElement("div");
+            item.className = "history-item";
+
+            item.innerHTML = `
+                <div>
+                    <div class="history-result">${match.result}</div>
+                    <div class="history-opponent">vs ${match.opponent}</div>
+                </div>
+
+                <div class="history-date">
+                    ${new Date(match.played_at).toLocaleString()}
+                </div>
+            `;
+
+            historyList.appendChild(item);
+        });
+
+    } catch (error) {
+        console.error(error);
+        historyList.innerHTML = "<p>Could not load match history.</p>";
+    }
+});
+
+
+closeHistory.addEventListener("click", () => {
+    historyScreen.style.display = "none";
+});
+
+
+
+const savedToken = localStorage.getItem("token");
+
+if (savedToken) {
+    document.getElementById("authScreen").style.display = "none";
+} else {
+    document.getElementById("authScreen").style.display = "flex";
 }
