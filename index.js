@@ -687,7 +687,7 @@ loginForm.addEventListener("submit", async (event) => {
     loginMessage.textContent = "Logging in...";
 
     try {
-        const response = await fetch("/api/login", {
+        const response = await fetch("https://nova-tic-tac-toe.onrender.com/api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
