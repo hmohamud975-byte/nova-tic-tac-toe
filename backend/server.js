@@ -2,20 +2,19 @@ const express = require("express");
 const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const path = require("path");
 
 const app = express();
 const PORT = 3000;
 const JWT_SECRET = "nova-super-secret-key-change-this-later";
 
 app.use(express.json());
-app.use(express.static(__dirname));
-
+app.use(express.static(path.join(__dirname, "..")));
 const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "nova_tic_tac_toe"
 });
 
 db.connect((error) => {
@@ -44,7 +43,6 @@ app.get("/api/leaderboard", (req, res) => {
 app.post("/api/signup", async (req, res) => {
     const { username, password, confirmPassword } = req.body;
 
-    // Check that all fields were provided
     if (!username || !password || !confirmPassword) {
         return res.status(400).json({
             success: false,
@@ -52,7 +50,6 @@ app.post("/api/signup", async (req, res) => {
         });
     }
 
-    // Validate username
     const usernameRegex = /^[A-Za-z0-9_-]{3,20}$/;
 
     if (!usernameRegex.test(username)) {
@@ -62,7 +59,6 @@ app.post("/api/signup", async (req, res) => {
         });
     }
 
-    // Validate password length
     if (password.length < 8) {
         return res.status(400).json({
             success: false,
@@ -70,7 +66,6 @@ app.post("/api/signup", async (req, res) => {
         });
     }
 
-    // Check passwords match
     if (password !== confirmPassword) {
         return res.status(400).json({
             success: false,
@@ -78,13 +73,11 @@ app.post("/api/signup", async (req, res) => {
         });
     }
 
-    // Check if username already exists
     const checkSql = "SELECT id FROM users WHERE username = ?";
 
     db.query(checkSql, [username], async (error, results) => {
         if (error) {
             console.error(error);
-
             return res.status(500).json({
                 success: false,
                 message: "Something went wrong on the server."
@@ -98,10 +91,8 @@ app.post("/api/signup", async (req, res) => {
             });
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        // Save the new user
         const insertSql =
             "INSERT INTO users (username, password) VALUES (?, ?)";
 
@@ -111,7 +102,6 @@ app.post("/api/signup", async (req, res) => {
             (error, results) => {
                 if (error) {
                     console.error(error);
-
                     return res.status(500).json({
                         success: false,
                         message: "Could not create your account."
@@ -125,21 +115,25 @@ app.post("/api/signup", async (req, res) => {
             }
         );
     });
-}); 
+});
 
 app.get("/api/users", (req, res) => {
-    db.query("SELECT id, username, created_at FROM users", (error, results) => {
-        if (error) {
-            console.error(error);
-            return res.status(500).json({
-                success: false,
-                message: "Could not retrieve users."
-            });
-        }
+    db.query(
+        "SELECT id, username, created_at FROM users",
+        (error, results) => {
+            if (error) {
+                console.error(error);
+                return res.status(500).json({
+                    success: false,
+                    message: "Could not retrieve users."
+                });
+            }
 
-        res.json(results);
-    });
+            res.json(results);
+        }
+    );
 });
+
 app.post("/api/login", (req, res) => {
     const { username, password } = req.body;
 
@@ -155,7 +149,6 @@ app.post("/api/login", (req, res) => {
     db.query(sql, [username], async (error, results) => {
         if (error) {
             console.error(error);
-
             return res.status(500).json({
                 success: false,
                 message: "Something went wrong on the server."
@@ -183,7 +176,6 @@ app.post("/api/login", (req, res) => {
             });
         }
 
-        // Create login token
         const token = jwt.sign(
             {
                 id: user.id,
@@ -259,7 +251,6 @@ app.post("/api/matches", authenticateToken, (req, res) => {
         (error, results) => {
             if (error) {
                 console.error(error);
-
                 return res.status(500).json({
                     success: false,
                     message: "Could not save match."
@@ -286,7 +277,6 @@ app.get("/api/matches", authenticateToken, (req, res) => {
     db.query(sql, [req.user.id], (error, results) => {
         if (error) {
             console.error(error);
-
             return res.status(500).json({
                 success: false,
                 message: "Could not retrieve match history."

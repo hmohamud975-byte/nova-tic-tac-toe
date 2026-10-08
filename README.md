@@ -1,181 +1,65 @@
-# NOVA Tic Tac Toe
+# 🎮 MY TIC TAC TOE JOURNEY
 
-## 1. Project Name
+> **A small game. A LOT of debugging. And somehow... it works. 💀**
 
-**NOVA Tic Tac Toe**
+---
 
-A cyber-themed Tic-Tac-Toe web application with Player vs AI and Player vs Friend modes.
+## 🌌 About The Project
 
-## 2. Technologies Used
+For this project, I created a **mini Tic Tac Toe game** using **HTML, CSS, and JavaScript**.
 
-* HTML
-* CSS
-* JavaScript
-* Node.js
-* Express.js
-* MySQL
-* XAMPP
-* JWT
-* bcrypt
+I started by building the basic structure of the game in **HTML**, including the game board, buttons, and the other elements needed for the game.
 
-## 3. Requirements
+### 🧠 Building The Game
 
-Before running the application, make sure you have:
+After that, I worked on the **JavaScript** to make the game interactive.
 
-* Node.js and npm installed
-* XAMPP installed
-* MySQL running through XAMPP
-* A web browser
-* The NOVA Tic Tac Toe project files
+This was probably the hardest part because I came across **many errors** while writing and testing my code. Sometimes the game wouldn't respond when I clicked a box, while other times the **winning logic** or **restart function** wouldn't work properly.
 
-## 4. How to Install
+I kept checking my code, fixing mistakes, and testing everything again until I understood what was causing the problems.
 
-Open the project folder in VS Code.
+### 🎨 Making It Look Good
 
-Open the terminal and run:
+Once the main game was working, I used **CSS** to improve its appearance.
 
-```bash
-npm install
-```
+I wanted the game to have a **modern cyber / galaxy / gaming style**, so I added:
 
-This installs the required Node.js packages from `package.json`.
+* 🌌 Galaxy-inspired visuals
+* 💡 Glowing effects
+* 🎨 Custom colours
+* 🎮 Gaming-style buttons
+* ✨ Visual effects
+* 📱 A responsive layout for mobile devices
 
-## 5. How to Create the Database
+### 🤖 Getting Help Along The Way
 
-Open MySQL through XAMPP or the MySQL command line.
+There were many moments where I got completely stuck.
 
-Create the database:
+I used **AI** to help me understand some of the errors, explain what was going wrong, and find better ways to write certain parts of my code.
 
-```sql
-CREATE DATABASE nova_tic_tac_toe;
-```
+I didn't get everything right on the first try. There were plenty of **errors, corrections, testing, and probably a little bit of suffering**. 💀
 
-Select the database:
+But after several attempts, I finally got the game working the way I wanted.
 
-```sql
-USE nova_tic_tac_toe;
-```
+---
 
-Create the users table:
+## 🚀 What I Learned
 
-```sql
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
+Overall, this project helped me understand how the three main web technologies work together:
 
-Create the matches table:
+| Technology       | What I Learned                     |
+| ---------------- | ---------------------------------- |
+| 🌐 **HTML**      | Creates the structure of the game  |
+| 🎨 **CSS**       | Controls the design and appearance |
+| ⚡ **JavaScript** | Adds the logic and interaction     |
 
-```sql
-CREATE TABLE matches (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    opponent VARCHAR(50) NOT NULL DEFAULT 'Nova AI',
-    result ENUM('Win', 'Loss', 'Draw') NOT NULL,
-    played_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
-```
+Most importantly, this project taught me that **errors are a normal part of coding**.
 
-The database should now contain:
+Sometimes your code will break for absolutely no reason you can see at first. 😭
+You just have to **debug it, test it, learn from it, and keep going.**
 
-```text
-nova_tic_tac_toe
-├── users
-└── matches
-```
+> 💻 **Code. Break. Debug. Repeat.**
 
-## 6. How to Start XAMPP
+And eventually...
 
-1. Open the XAMPP Control Panel.
-2. Start **Apache**.
-3. Start **MySQL**.
-4. Make sure both services are running.
-
-The application uses MySQL to store user accounts and match history.
-
-## 7. How to Start the Node Server
-
-Open the project folder in VS Code.
-
-Open the terminal and run:
-
-```bash
-node server.js
-```
-
-The terminal should display:
-
-```text
-NOVA Tic Tac Toe running at http://localhost:3000
-Connected to nova_tic_tac_toe database!
-```
-
-## 8. How to Open the Application
-
-Open a web browser and go to:
-
-```text
-http://localhost:3000
-```
-
-The NOVA registration screen should appear.
-
-Create an account and then log in.
-
-After logging in, the Tic-Tac-Toe game will open.
-
-## 9. How to Test the Application
-
-### Test Account
-
-Create an account using your own test details.
-
-Example:
-
-```text
-Username: testplayer
-Password: Test1234
-```
-
-> This is only an example. Create the account through the application's registration page before testing.
-
-### Test Login
-
-Use the same username and password to log in.
-
-### Test Match Saving
-
-1. Log in.
-2. Select **Player vs AI**.
-3. Play a match.
-4. Finish the match.
-5. Open **HISTORY**.
-6. The result should appear in the match history.
-
-The result should also be stored in the MySQL `matches` table.
-
-You can verify it with:
-
-```sql
-USE nova_tic_tac_toe;
-
-SELECT * FROM users;
-
-SELECT * FROM matches;
-```
-
-### Test Logout
-
-Click **LOGOUT**.
-
-The application should return to the authentication screen.
-
-### Test Protected Features
-
-Try accessing match history without being logged in.
-
-Protected API requests require a valid authentication token, so unauthorized requests should be rejected.
+# 🎮 IT WORKS. 🔥
